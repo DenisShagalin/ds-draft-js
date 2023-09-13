@@ -28,6 +28,7 @@ const getEntityKeyForSelection = require('getEntityKeyForSelection');
 const getTextContentFromFiles = require('getTextContentFromFiles');
 const isEventHandled = require('isEventHandled');
 const splitTextIntoTextBlocks = require('splitTextIntoTextBlocks');
+const utils = require('utils');
 
 /**
  * Paste content.
@@ -96,6 +97,9 @@ function editOnPaste(editor: DraftEditor, e: SyntheticClipboardEvent<>): void {
   let textBlocks: Array<string> = [];
   let text: string = (data.getText(): any);
   let html: string = (data.getHTML(): any);
+
+  html = html.replaceAll(utils.emptyLineRegex, utils.EMPTY_PARAGRAPH_MARK);
+
   const editorState = editor._latestEditorState;
 
   if (editor.props.formatPastedText) {
